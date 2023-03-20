@@ -9,9 +9,10 @@ const {
   LOGIN_FAILURE,
   REGISTER_START,
   REGISTER_SUCCESS,
-  REGISTER_FAILURE
-} = types;
-
+  REGISTER_FAILURE,
+  PLAY_START,
+  PLAY_SUCCESS,
+  PLAY_FAILURE } = types;
 // need to set up enviro elements
 const api = 'http://localhost:3500'
 
@@ -27,7 +28,7 @@ export const login = (data) => {
 
         let data = jwt(res.data.accessToken)
         user.data = data
-        
+
         return user
       }
       )
@@ -37,12 +38,12 @@ export const login = (data) => {
           expires: new Date(res.data.exp * 1000),
         });
         dispatch({ type: LOGIN_SUCCESS, payload: res.data.UserInfo })
-        
+
         return res.data
 
       })
       .catch(err => {
-        console.log("POOP",err)
+        console.log("POOP", err)
         dispatch({ type: LOGIN_FAILURE, payload: err })
       })
   }
@@ -65,12 +66,12 @@ export const register = (data) => {
       }
       )
       .then(res => {
-        
+
         const cookies = new Cookies();
         cookies.set("jwt_authorization", res.accessToken, {
           expires: new Date(res.data.exp * 1000),
         });
-       
+
         dispatch({ type: REGISTER_SUCCESS, payload: res.data.UserInfo })
         return true
       }

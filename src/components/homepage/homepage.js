@@ -6,6 +6,7 @@ import Container from '@mui/material/Container';
 import { connect } from 'react-redux'
 //component
 import MenuBar from '../menuBar/menuBar.js'
+import MusicPlayer from '../musicPlayer/musicPlayer.js'
 
 const Homepage = () => {
   const [page, setPage] = useState("Homepage")
@@ -20,10 +21,10 @@ const Homepage = () => {
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(page)
 
-  },[page])
+  }, [page])
   return (
     <>
       <div className="main" style={styles.main}>
@@ -31,7 +32,9 @@ const Homepage = () => {
       </div>
       <div>
         Newest Songs
+        <MusicPlayer />
       </div>
+
     </>
   )
 }

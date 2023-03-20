@@ -6,7 +6,10 @@ const {
   LOGIN_FAILURE,
   REGISTER_START,
   REGISTER_SUCCESS,
-  REGISTER_FAILURE
+  REGISTER_FAILURE,
+  PLAY_START,
+  PLAY_SUCCESS,
+  PLAY_FAILURE
 } = types;
 
 const initialState = {
@@ -14,6 +17,7 @@ const initialState = {
   token: "",
   error: "",
   isLoading: "",
+  currentSong: ""
 };
 
 
@@ -56,6 +60,23 @@ const userReducer = (state = initialState, { type, payload }) => {
       }
     case REGISTER_FAILURE:
       return {
+        ...state,
+        error: payload,
+        isLoading: false
+      }
+    case PLAY_START:
+      return {
+        ...state,
+        isLoading: true,
+      }
+    case PLAY_SUCCESS:
+      return{
+        ...state,
+        currentSong: payload,
+        isLoading: false
+      }
+    case PLAY_FAILURE: 
+      return{ 
         ...state,
         error: payload,
         isLoading: false
