@@ -79,7 +79,7 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-const MusicPlayer =() => {
+const MusicPlayer =(props) => {
   const theme = useTheme();
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
@@ -98,19 +98,19 @@ const MusicPlayer =() => {
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <CoverImage>
             <img
-              alt="can't win - Chilling Sunday"
-              src="/static/images/sliders/chilling-sunday.jpg"
+              alt="placeholder"
+              src= {props.currentSong.imgSrc}
             />
           </CoverImage>
           <Box sx={{ ml: 1.5, minWidth: 0 }}>
             <Typography variant="caption" color="text.secondary" fontWeight={500}>
-              Jun Pulse
+             {props.currentSong.artist} 
             </Typography>
             <Typography noWrap>
-              <b>คนเก่าเขาทำไว้ดี (Can&apos;t win)</b>
+              <b>{props.currentSong.album}</b>
             </Typography>
             <Typography noWrap letterSpacing={-0.25}>
-              Chilling Sunday &mdash; คนเก่าเขาทำไว้ดี
+              {props.currentSong.name}
             </Typography>
           </Box>
         </Box>

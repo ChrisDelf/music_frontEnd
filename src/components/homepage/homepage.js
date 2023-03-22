@@ -8,7 +8,8 @@ import { connect } from 'react-redux'
 import MenuBar from '../menuBar/menuBar.js'
 import MusicPlayer from '../musicPlayer/musicPlayer.js'
 
-const Homepage = () => {
+const Homepage = (props) => {
+  const { audioMain } = props
   const [page, setPage] = useState("Homepage")
   const styles = {
     main: {
@@ -16,10 +17,10 @@ const Homepage = () => {
       width: "100%",
       display: "flex",
       justifyContent: "flex-end",
-
-
     }
   }
+
+  
 
   useEffect(() => {
     console.log(page)

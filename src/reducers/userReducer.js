@@ -17,7 +17,11 @@ const initialState = {
   token: "",
   error: "",
   isLoading: "",
-  currentSong: ""
+  currentSong: {name:"Caprice of the Leaves",
+                src:"../music/Caprice of the Leaves-1420596481.mp3",
+                artist:"unknown",
+                album:"Genshin Impact",
+                imgSrc:null}
 };
 
 

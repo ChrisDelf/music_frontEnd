@@ -1,7 +1,9 @@
 import axios from 'axios'
+import React from 'react'
 import { ERROR, types } from './index'
 import jwt from 'jwt-decode'
 import Cookies from 'universal-cookie'
+import env from "react-dotenv";
 
 const {
   LOGIN_START,
@@ -14,7 +16,7 @@ const {
   PLAY_SUCCESS,
   PLAY_FAILURE } = types;
 // need to set up enviro elements
-const api = 'http://localhost:3500'
+const api = env.API_ADDRESS
 
 export const login = (data) => {
   return dispatch => {
@@ -42,8 +44,7 @@ export const login = (data) => {
         return res.data
 
       })
-      .catch(err => {
-        console.log("POOP", err)
+      .catch(err => { 
         dispatch({ type: LOGIN_FAILURE, payload: err })
       })
   }
@@ -81,6 +82,17 @@ export const register = (data) => {
       }
       )
   }
+}
+
+export const setAudioTrack = (song) => dispatch => {
+
+  let tempSong = {
+    src: `http://localhost:8090/audio/audios/${song.id}`,
+    title: song.title
+
+  }
+  dispatch({ type: PLAY_START, payload: "start" })
+  dispatch({ type: PLAY_SUCCESS, payload: tempSong })
 }
 
 
