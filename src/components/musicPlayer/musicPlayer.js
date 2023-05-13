@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useEffect, useState} from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -13,6 +13,8 @@ import VolumeUpRounded from '@mui/icons-material/VolumeUpRounded';
 import VolumeDownRounded from '@mui/icons-material/VolumeDownRounded';
 //redux
 import { connect } from 'react-redux'
+//actions
+import {getAudioTrack} from '../../actions/user'
 
 const WallPaper = styled('div')({
   position: 'absolute',
@@ -84,6 +86,8 @@ const MusicPlayer =(props) => {
   const duration = 200; // seconds
   const [position, setPosition] = React.useState(32);
   const [paused, setPaused] = React.useState(false);
+  const { audioMain } = props
+  
   function formatDuration(value) {
     const minute = Math.floor(value / 60);
     const secondLeft = value - minute * 60;
@@ -92,6 +96,30 @@ const MusicPlayer =(props) => {
   const mainIconColor = theme.palette.mode === 'dark' ? '#fff' : '#000';
   const lightIconColor =
     theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+
+
+
+  useEffect(() =>
+    {
+      console.log(props.currentSong)
+     if (paused == true &&(props.currentSong.id != null))
+      {
+        console.log("dsafasd")
+        audioMain.pause()
+      }
+      else
+      {
+        //testing
+ 
+        if (props.currentSong.id != null) {
+        /* audioMain.volume = props.audioVolume */
+      
+        audioMain.src = props.currentSong.audio
+        audioMain.play()
+          }
+      }
+    },[paused])
+
   return (
     <Box sx={{ width: '100%', overflow: 'hidden' }}>
       <Widget>
@@ -221,9 +249,9 @@ const MusicPlayer =(props) => {
 const mapStateToProps = state => {
   return{
     currentSong: state.userReducer.currentSong,
-    currentSongId: state.userReducer.currentSOngId
+    
 
   }
 }
 
-export default connect (mapStateToProps, {})(MusicPlayer)
+export default connect (mapStateToProps, {getAudioTrack})(MusicPlayer)

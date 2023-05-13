@@ -12,9 +12,7 @@ const {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  PLAY_START,
-  PLAY_SUCCESS,
-  PLAY_FAILURE } = types;
+ } = types;
 // need to set up enviro elements
 const api = env.API_ADDRESS
 
@@ -40,7 +38,6 @@ export const login = (data) => {
           expires: new Date(res.data.exp * 1000),
         });
         dispatch({ type: LOGIN_SUCCESS, payload: res.data.UserInfo })
-
         return res.data
 
       })
@@ -84,16 +81,6 @@ export const register = (data) => {
   }
 }
 
-export const setAudioTrack = (song) => dispatch => {
-
-  let tempSong = {
-    src: `http://localhost:8090/audio/audios/${song.id}`,
-    title: song.title
-
-  }
-  dispatch({ type: PLAY_START, payload: "start" })
-  dispatch({ type: PLAY_SUCCESS, payload: tempSong })
-}
 
 
 

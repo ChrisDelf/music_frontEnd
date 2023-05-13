@@ -7,6 +7,10 @@ import { connect } from 'react-redux'
 //component
 import MenuBar from '../menuBar/menuBar.js'
 import MusicPlayer from '../musicPlayer/musicPlayer.js'
+// user actions
+import {getAudioTrack} from '../../actions/user'
+import {selectSong} from '../../actions/user'
+
 
 const Homepage = (props) => {
   const { audioMain } = props
@@ -19,11 +23,26 @@ const Homepage = (props) => {
       justifyContent: "flex-end",
     }
   }
+  const setAudio = async () => {
+   if(props.currentSong.id != null)
+    { 
+      await props.getAudioTrack(props.currentSong.id)
+      audioMain.volume = parseFloat(props.audioVolume)
+    }
+    else
+    {
 
-  
+    }
+  }
+  useEffect(() => {
+    
+  }, [props.currentSong])
 
   useEffect(() => {
-    console.log(page)
+    props.selectSong(1)
+    
+    setAudio()
+    console.log(props.currentSong.audio)
 
   }, [page])
   return (
@@ -33,11 +52,18 @@ const Homepage = (props) => {
       </div>
       <div>
         Newest Songs
-        <MusicPlayer />
+        <MusicPlayer audioMain={audioMain} />
       </div>
 
     </>
   )
 }
 
-export default connect(null, {})(Homepage)
+const mapStateToProps = state => {
+  return{
+    currentSong: state.userReducer.currentSong,
+    audioVolume: state.userReducer.audioVolume
+
+  }
+}
+export default connect(mapStateToProps, {selectSong, getAudioTrack})(Homepage)

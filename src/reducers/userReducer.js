@@ -7,9 +7,12 @@ const {
   REGISTER_START,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
-  PLAY_START,
-  PLAY_SUCCESS,
-  PLAY_FAILURE
+  GET_SONG_START,
+  GET_SONG_SUCCESS,
+  GET_SONG_FAILURE,
+  GET_AUDIO_START,
+  GET_AUDIO_SUCCESS,
+  GET_AUDIO_FAILURE,
 } = types;
 
 const initialState = {
@@ -17,11 +20,16 @@ const initialState = {
   token: "",
   error: "",
   isLoading: "",
-  currentSong: {name:"Caprice of the Leaves",
-                src:"../music/Caprice of the Leaves-1420596481.mp3",
-                artist:"unknown",
-                album:"Genshin Impact",
-                imgSrc:null}
+  currentSong: {
+    name: null,
+    artist: null,
+    album: null,
+    id: null,
+    imgSrc: null,
+    audio: null,
+    audioPosition: null,
+  },
+  audioVolume: 0.4
 };
 
 
@@ -35,7 +43,6 @@ const userReducer = (state = initialState, { type, payload }) => {
 
       }
     case LOGIN_SUCCESS:
-      console.log(payload)
       return {
         ...state,
         error: '',
@@ -57,7 +64,7 @@ const userReducer = (state = initialState, { type, payload }) => {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        error:'',
+        error: '',
         token: payload.token,
         name: payload.username,
         isLoading: true
@@ -68,20 +75,44 @@ const userReducer = (state = initialState, { type, payload }) => {
         error: payload,
         isLoading: false
       }
-    case PLAY_START:
+    case GET_SONG_START:
       return {
         ...state,
         isLoading: true,
       }
-    case PLAY_SUCCESS:
-      return{
+    case GET_SONG_SUCCESS:
+      return {
         ...state,
-        currentSong: payload,
+        currentSong: {
+          ...state.currentSong,
+          id: payload.id,
+          name:payload.name
+        },
         isLoading: false
       }
-    case PLAY_FAILURE: 
-      return{ 
+    case GET_SONG_FAILURE:
+      return {
         ...state,
+        error: payload,
+        isLoading: false
+      }
+    case GET_AUDIO_START:
+      return{
+        ...state,
+        isLoading: true
+      }
+    case GET_AUDIO_SUCCESS:
+      console.log(payload)
+      return{
+        ...state,
+          currentSong:{
+            ...state.currentSong,
+            audio: payload
+          },
+        isLoading: false
+      }
+    case GET_AUDIO_FAILURE:
+      return{
         error: payload,
         isLoading: false
       }
