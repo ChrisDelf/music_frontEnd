@@ -4,8 +4,9 @@ import SongCell from '../jobCell/jobCell';
 import { connect } from 'react-redux'
 import React,{useEffect, useState} from 'react';
 import env from "react-dotenv";
-
+import io from 'socket.io-client';
 const api = env.API_ADDRESS;
+
 const handleJobUpdate = (job) =>
 {
  // update the job status
@@ -43,13 +44,27 @@ const Download = () =>{
         }
     }
 
-    // need a useEffect that checks periodically if the status is done.
-    // it makes a axios request to a backend to get the information
-    
-    // creating a websocket to connect to the server
-    
+    //Using a useEffect to create a socket connection to the server
+    useEffect(() => {
+        const socket = io(api);
 
-    // going to initiate io socket
+     socket.on('connect', () => {
+      console.log('Connected to socket');
+      socket.emit('chat message', 'Hello from client!');
+    });
+
+    socket.on('chat message', (msg) => {
+      console.log('Received message:', msg);
+    });
+
+
+        return () => {
+            socket.disconnect();
+    }
+},[])
+
+        
+
      
 
 
@@ -59,8 +74,7 @@ const Download = () =>{
         <>
         <MenuBar/>
         {exampleArray.map((job) => {
-        return SongCell(job)
-        
+        return SongCell(job)       
     })}
         </>
 
