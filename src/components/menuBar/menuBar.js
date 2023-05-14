@@ -12,11 +12,13 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import TextField from '@mui/material/TextField';
+import { useNavigate } from 'react-router-dom';
 
 export default function MenuBar(props) {
   const { setPage } = props
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -27,9 +29,9 @@ export default function MenuBar(props) {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography sx={{ minWidth: 100 }} onClick={() => { setPage("Download") }}>Download</Typography>
+        <Typography sx={{ minWidth: 100 }} onClick={() => {navigate("/download/")}}>Download</Typography>
         <TextField id="outlined-basic" label="Search" variant="outlined" />
-        <Typography sx={{ minWidth: 100 }} onClick={() => { setPage("Library") }}>Library</Typography>
+        <Typography sx={{ minWidth: 100 }} onClick={() => { console.log("I have been Clicked") }}>Library</Typography>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
